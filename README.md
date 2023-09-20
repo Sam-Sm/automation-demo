@@ -1,7 +1,7 @@
 
 # Playwright Test Project (API and Functional)
 
-A demo of using Playwright to automate and API test, and a functional one.
+A demo of using Playwright to automate API and Functional tests.
 
 Test Workflow Status: 
 
@@ -25,7 +25,7 @@ The following Environment Variables are required to run the project:
 
 ### Running the API Tests
 ```bash
-  yarn test:API
+  yarn test:api
 ```
 
 ### Running the Functional Tests
