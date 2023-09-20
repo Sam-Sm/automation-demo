@@ -1,0 +1,53 @@
+name: Run Playwright Tests
+
+on:
+  push:
+    branches:
+      - main
+  # Run every hour
+  schedule:
+    - cron: '0 * * * *'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      DefaultUrl:
+        description: 'Base URL for the application'
+        required: true
+        default: 'https://parabank.parasoft.com/'
+      DefaultApiURL:
+        description: 'Base URL for the API'
+        required: true
+        default: 'https://www.thecocktaildb.com/api'
+
+jobs:
+  run-playwright-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --ignore-engines --prefer-offline
+
+      - name: Create .env file
+        run: |
+          echo "CI=true" >> .env
+          echo "DEFAULT_URL=${{inputs.DefaultUrl || vars.DEFAULT_URL }}" >> .env
+          echo "DEFAULT_API_URL=${{inputs.DefaultApiURL || vars.DEFAULT_API_URL }}" >> .env
+
+      - name: Run Playwright Tests (API)
+        run: |
+          yarn test:api
+
+      - name: Run Playwright Tests (Functional)
+        run: |
+          yarn playwright install
+          yarn playwright install-deps
+          yarn test:functional

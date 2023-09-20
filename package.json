@@ -1,0 +1,19 @@
+{
+  "name": "playwright-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.38.0",
+    "@types/node": "^20.6.1"
+  },
+  "scripts": {
+    "test:functional": "playwright test tests/functional",
+    "test:debug": "playwright test --debug",
+    "test:api": "export API=true; playwright test tests/api"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "joi": "^17.10.2"
+  }
+}
